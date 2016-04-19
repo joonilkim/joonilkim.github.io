@@ -1,0 +1,40 @@
+body{
+  margin:120px 200px;
+  font-family:'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-weight:300;
+  font-size:18px;
+  line-height:1.8rem;
+  color:#333;
+}
+h1{
+  font-size:6rem;
+  line-height:10rem;
+  font-weight:500;
+}
+h2{
+  font-size:3rem;
+  line-height:6rem;
+  font-weight:700;
+}
+section{
+  margin-bottom:160px;
+}
+article{
+  margin-bottom:80px;
+}
+.c-g{
+  color:#777 !important;
+}
+.bold{
+  font-weight:700 !important;
+}
+
+@media only screen and (max-width: 480px) {
+  body{ margin:120px 40px;font-size:15px;}
+  h1{font-size:2.7rem;font-weight:700;line-height:6rem;}
+  h2{font-size:2rem;font-weight:700;line-height:5rem;}
+  section{
+    margin-bottom:100px;
+  }
+}
+
