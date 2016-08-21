@@ -1,5 +1,3 @@
-FORMAT: 1A
-
 # Stardaq
 
 ## posts [/posts]
