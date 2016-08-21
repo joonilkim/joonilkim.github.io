@@ -1,9 +1,8 @@
 # USAGE
 
 ```sh
-brew install --HEAD https://raw.github.com/apiaryio/drafter/master/tools/homebrew/drafter.rb
+npm install -g aglio
 
-go get -u github.com/peterhellberg/hiro
+aglio --theme-variables slate -i blueprint.md -o index.html
 
-hiro -input=blueprint.md -output=index.html
 ```
