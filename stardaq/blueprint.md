@@ -4,11 +4,15 @@ FORMAT: 1A
 
 
 ## /me
+
 ### POST
+session 생성. 201 처음가입시. 200 기존 유저
 + Request
     + Attributes (user)
 + Response 200
-    + Attributes (token)
++ Response 201
+    + Attributes
+        + join_reward (number) - 가입시 지금된 금액
 
 ### GET
 + Response 200
@@ -18,6 +22,15 @@ FORMAT: 1A
 + Request
     + Attributes (user)
 + Response 200
+
+## /me/names/:name
+
+### GET
+이름 중복 체크. 200 중복. 400 사용불가. 404 no 중복.
++ Response 200
++ Response 400
++ Response 404
+
 
 ## /me/sms_codes
 
@@ -56,12 +69,24 @@ admin only
 + Response 403
     + Attributes (error)
 
-## /stars
+
+## /users/:id/transactions
+
+### POST
++ Request
+    + Attributes (transaction)
++ Response 200
 
 ### GET
-+ Request
-    + Parameters
-      + category (category, optional)
++ Response 200
+    + Attributes (array[transaction])
+
+
+## /stars{?category}
++ Parameters
+    + category (category, optional)
+
+### GET
 + Response 200
     + Attributes (array[star_ext])
 
@@ -87,21 +112,20 @@ admin only
 admin only
 + Response 200
 
-## /stars/:id/histories
+## /stars/:id/histories{?period,thing}
++ Parameters
+    + period (enum) 
+        - daily
+        - weekly
+        - monthly
+        - yearly
+    + thing (enum)
+        - value
+        - history
+        - rank
 
 ### GET
 차트데이터
-+ Request
-    + Parameters
-        + period (enum) 
-            - daily
-            - weekly
-            - monthly
-            - yearly
-        + thing (enum)
-            - value
-            - history
-            - rank
 + Response 200
     + Attributes (array[history_ext])
 
@@ -152,13 +176,12 @@ admin only
 
 
 
-## /posts
+## /posts{?since,limit}
++ Parameters
+    + since - post id
+    + limit (number)
 
 ### GET
-+ Request
-    + Parameters
-        + since - post id
-        + limit (number)
 + Response 200 
     + Attributes (array[post_ext])
 
@@ -212,6 +235,11 @@ admin only
 ### PUT
 + Response 200 
 
+## /posts/:id/unlike
+
+### PUT
++ Response 200 
+
 
 
 ## /listings
@@ -224,9 +252,6 @@ admin only
 + Response 409
     + Attributes (error)
 + Response 412
-    + Attributes (error)
-        - confirm_price (number) - 최근 가격
-        - confirm_net_price (number) - 체결 총액
 
 ### GET
 + Response 200
@@ -239,7 +264,7 @@ admin only
     + Attributes (listing)
         - target_price (number)
         - current_price (number)
-        - participant_count (number)
+        - supporter_count (number)
         - comment_count (number)
         - like_count (number)
 
@@ -252,6 +277,7 @@ admin only
     + Attributes (error)
 
 ## /listings/:id/accept
+
 ### PUT
 admin only
 + Response 200 
@@ -261,30 +287,30 @@ admin only
 admin only
 + Response 200 
 
-## /listings/:id/participants
+## /listings/:id/supporters
 
 ### POST
 412: 예치금 부족
 + Request
-    + Attributes (participant)
+    + Attributes (supporter)
 + Response 200 
 + Response 412
     + Attributes (error)
 
 ### GET
 + Response 200 
-    + Attributes (array[participant])
+    + Attributes (array[supporter])
 
-## /listings/:id/participants/:user_id
+## /listings/:id/supporters/:user_id
 
 ### GET
 + Response 200 
-    + Attributes (participant)
+    + Attributes (supporter)
 
 ### PUT
 412: 예치금 부족
 + Request
-    + Attributes (participant)
+    + Attributes (supporter)
 + Response 200 
 + Response 412
     + Attributes (error)
@@ -294,7 +320,7 @@ admin only
 
 
 
-## /listing/:id/comments
+## /listings/:id/comments
 
 ### POST
 + Request
@@ -309,7 +335,7 @@ admin only
 + Response 200 
     + Attributes (array[listing_comment])
 
-## /listing/:id/comments/:comment_id
+## /listings/:id/comments/:comment_id
 
 ### PUT
 + Request
@@ -319,7 +345,7 @@ admin only
 ### DELETE
 + Response 200 
 
-## /listing/:id/like
+## /listings/:id/like
 
 ### PUT
 + Response 200 
@@ -390,7 +416,7 @@ Admin only
 ## /reports
 
 ### GET
-유저인 경우 자기꺼만, 관리자인 경우 전체
+admin only. 신고 목록
 + Response 200 
     + Attributes (array[report])
 
@@ -415,7 +441,7 @@ Admin only
 + Response 200
 
 
-## /reports/:id/confirm
+## /reports/:id/accept
 
 ### PUT
 Admin only
@@ -429,7 +455,7 @@ Admin only
 ## /delistings
 
 ### GET
-Admin only
+상폐 목록. Admin only.
 + Response 200 
     + Attributes (array[delisting])
 
@@ -455,6 +481,7 @@ Admin only
 ## /app_versions
 
 ### GET
+업데이트 관련
 + Response 200 
     + Attributes (array[app_version])
 
@@ -793,17 +820,45 @@ admin only
 admin only
 + Response 200
 
-## /admin_tokens
+
+
+## /admin_login
 
 ### POST
 admin only
 + Request
     + Attributes (admin)
 + Response 200
-    + Attributes
-        + token
-        + admin - id of admin
-        + expires (number) - in minutes
+
+
+## /setting
+
+### GET
+admin only
++ Response 200
+    + Attributes (setting)
+
+### PUT
+admin only
++ Request
+    + Attributes (setting)
++ Response 200
+
+
+
+## /master_transactions
+
+### POST
+admin only
++ Request
+    + Attributes (master_transaction)
++ Response 200
+
+### GET
+admin only
++ Response 200
+    + Attributes (array[master_transaction])
+
 
 
 # Data Structures
@@ -812,20 +867,48 @@ admin only
 - name
 - password
 
+# misc
+- start_at - 장시작
+- end_at - 장마감
+- order_fee (number) - 거래수수료. 0.1%
+- listing_minimum (number) - 최소상장가. 3% of net value
+- base_value (number) - 0.14 of market net volume
+
+## setting
+- listing_deposit (number) - 상장시 예탁할 돈(3000)
+- listing_reward (number) - 상장시 인센티브 (10000)
+- join_reward (number) - 가입시 줄 돈(1000)
+
+## master_account
+- type (enum)
+    - stake - 거래 및 이벤트시 사용할 수 있는 총 액(boss coin으로 전환)
+    - profit - 거래로 번돈
+- cash (number)
+
+## master_transaction
+- account (master_account)
+- amount (number)
+- cause_id (string, optional) - 관련 event, order등의 id
+- cause (enum)
+    - order - 상폐 포함
+    - event
+    - user_listing_reward
+    - user_join_reward
+    - admin_deposit_or_withdrawal
+
 ## star
-- _id - get only
+- id - get only
 - name
 - category (category)
-- active (boolean)
 - birth: `2008-01-14T04:33:35Z`
 - body_size - 키, 몸무게
 - education
 - company
 - website_url
 - biography - 나머지 정보들
-- image
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- image_url
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## star_ext (star)
 - up_position (number)
@@ -833,62 +916,72 @@ admin only
 - price: 33.33 (number) - 인기도, price
 - change (number) - 전일비
 - change_ratio: 0.5 (number) - 등락율
-- history_volume (number) - 거래량, sum of abs(position)
+- trading_volume (number) - 거래량, sum of abs(position)
 - weekly_ranks (array[number]) - [1주전, 2주전, 3주전]
-- updated_at: `2008-01-14T04:33:35Z` - 기준시간
 
 ## order
-- _id - get only
+- id - get only
 - user (user)
 - star (star)
 - position (number)
+- pre_position (number) - 변경전 소유량. get only
 - histories (array[history])
-- ordered_at: `2008-01-14T04:33:35Z` - order한 시간과 logging시간 다를 수 있음
-- created_at: `2008-01-14T04:33:35Z`
-- updated_at: `2008-01-14T04:33:35Z`
+- orderedAt: `2008-01-14T04:33:35Z` - order한 시간과 logging시간 다를 수 있음
+- createdAt: `2008-01-14T04:33:35Z`
+- updatedAt: `2008-01-14T04:33:35Z`
 
 ## history
-- _id - get only
+- id - get only
 - star (star)
-- position (number)
+- net_up_position (number)
+- net_down_position (number)
 
 ## history_ext (history)
-- ordered_at: `2008-01-14T04:33:35Z`
+- orderedAt: `2008-01-14T04:33:35Z`
 
 ## user
-- _id - get only
+- id - get only
 - name
-- email (string, optional)
-- cash (number) - 스타달러
+- email (string)
+- cash (number) - 스타달러. 유용가능액. (다운시 -50*num_of_downs)
 - sex (enum)
     - male
     - female
 - age (number)
 - phone
 - avatar_url
-- active (boolean)
+- active (boolean) - 탈퇴 혹은 휴면
+- is_dismiss (boolean) - 탈퇴 여부
 - allows_push (boolean)
-- oauthproviders (array[oauthprovider])
-- is_public (boolean) - 프로파일 공개 여부
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
-
-## oauthprovider
 - provider (provider)
-- token
-- user_id - user id of the provider service
-- expires (number) - in minutes
+- provider_user_id
+- is_public (boolean) - 프로파일 공개 여부
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
+
+## transaction
+- user (user)
+- amount (number)
+- cause_id (string, optional)
+- cause (enum)
+    - order
+    - event
+    - listing_reward
+    - join_reward
+    - listing_deposit
+    - listing_cancel
 
 ## stock
-- _id - get only
+- id - get only
 - user (user)
 - star (star)
 - position (number)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- net_down_deposit (number) - down이 있을경우 존재. down할 당시 들어온 돈의 합
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## post
-- _id - get only
+- id - get only
 - type (enum)
     - star_post
     - reco_post
@@ -899,26 +992,26 @@ admin only
 - image
 - is_reported (boolean) - 비공개 여부
 - read_count (number)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## comment
-- _id - get only
+- id - get only
 - post
 - user (user)
 - text
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## like
-- _id - get only
+- id - get only
 - post
 - user (user)
-- created_at: `2008-01-14T04:33:35Z`
-- updated_at: `2008-01-14T04:33:35Z`
+- createdAt: `2008-01-14T04:33:35Z`
+- updatedAt: `2008-01-14T04:33:35Z`
 
 ## report
-- _id - get only
+- id - get only
 - category (enum)
     - user
     - post
@@ -929,11 +1022,11 @@ admin only
 - thing_user (user) - get only
 - user (user)
 - reason
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## listing
-- _id - get only
+- id - get only
 - category (category)
 - star (star)
 - user (user)
@@ -942,14 +1035,14 @@ admin only
 - facebook_url
 - image
 - read_count (number)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## listing_comment (comment)
 
 ## listing_like (like)
 
-## participant
+## supporter
 - listing - id of listing
 - user (user)
 - position (number) - 음수 허용안됨
@@ -957,13 +1050,13 @@ admin only
 ## delisting (star)
 
 ## to_delisting
-- _id - get only, 관심종목
+- id - get only, 관심종목
 - star (star)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## notification
-- _id - get only
+- id - get only
 - user (user)
 - star (star) - related star id
 - link_type (enum)
@@ -975,19 +1068,20 @@ admin only
 - message
 - image
 - is_read (boolean)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## verification
 - phone
 - code (number)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## app_version
 - device (device)
 - version
 - url
+- major_update (boolean) - 강제 업그레이드 여부 
 
 ## service_config
 - join_reward (number)
@@ -998,14 +1092,14 @@ admin only
 - content
 - url
 - device (device)
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## faq
 - title
 - content
-- created_at: `2008-01-14T04:33:35Z` - get only
-- updated_at: `2008-01-14T04:33:35Z` - get only
+- createdAt: `2008-01-14T04:33:35Z` - get only
+- updatedAt: `2008-01-14T04:33:35Z` - get only
 
 ## post_ext (post)
 - like_count (number)
@@ -1025,11 +1119,6 @@ admin only
 - facebook
 - kakao
 
-## token
-- token
-- user - id of user
-- expires (number) - in minutes
-
 ## device (enum)
 - iphone
 - android
@@ -1040,7 +1129,7 @@ admin only
 - message
 
 ## event
-- _id
+- id
 - title
 - sub_title
 - content
@@ -1049,7 +1138,7 @@ admin only
 - end_at
 - carriable (boolean) - 이월가능여부
 - active (boolean)
-- created_at
+- createdAt
 
 ## attendance_event (event)
 - day_reward
@@ -1059,7 +1148,7 @@ admin only
 ## attendance
 - event (attendance_event)
 - user (user)
-- created_at
+- createdAt
 
 * attendance - 7*5일간 유저 구해서 %7=0이면 리워드. %30=0 이면 리워드. 35일 이전껀 삭제.
 
@@ -1070,7 +1159,7 @@ admin only
 ## share
 - event (share_event)
 - user (user)
-- created_at
+- createdAt
 
 ## photo_event (event)
 - play_fee (number)
