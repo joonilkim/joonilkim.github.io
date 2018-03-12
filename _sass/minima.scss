@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+// Define defaults for each variable.
+
+$base-font-family: "Gill Sans MT", "Gill Sans", "맑은 고딕", sans-serif !default;
+$base-font-size:   12px !default;
+$base-font-weight: 400 !default;
+$small-font-size:  $base-font-size * 0.9 !default;
+$base-line-height: 1.5 !default;
+
+$spacing-unit:     5px !default;
+$paragraph-unit:   80px !default;
+
+$text-color:       #444 !default;
+$background-color: #fff !default;
+$brand-color:      #555 !default;
+
+$grey-color:       #4c4c4c !default;
+$grey-color-light: lighten($grey-color, 34%) !default;
+$grey-color-dark:  darken($grey-color, 25%) !default;
+
+// Width of the content area
+$content-width:    420px !default;
+
+$on-palm:          420px !default;
+$on-laptop:        420px !default;
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//   .wrapper {
+//     padding-right: $spacing-unit / 2;
+//     padding-left: $spacing-unit / 2;
+//   }
+// }
+@mixin media-query($device) {
+  @media screen and (max-width: $device) {
+    @content;
+  }
+}
+
+@mixin relative-font-size($ratio) {
+  font-size: $base-font-size * $ratio;
+}
+
+// Import partials.
+@import
+  "minima/base",
+  "minima/layout",
+  "minima/syntax-highlighting"
+;
