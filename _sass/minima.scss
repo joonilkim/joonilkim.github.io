@@ -8,7 +8,7 @@ $base-font-weight: 400 !default;
 $small-font-size:  $base-font-size * 0.9 !default;
 $base-line-height: 1.8 !default;
 
-$spacing-unit:     5px !default;
+$spacing-unit:     20px !default;
 $line-unit:        20px !default;
 $paragraph-unit:   70px !default;
 
@@ -21,10 +21,10 @@ $grey-color-light: lighten($grey-color, 50%) !default;
 $grey-color-dark:  darken($grey-color, 25%) !default;
 
 // Width of the content area
-$content-width:    420px !default;
+$content-width:    420px + $spacing-unit * 2 !default;
 
-$on-palm:          420px !default;
-$on-laptop:        420px !default;
+$on-palm:          $content-width !default;
+$on-laptop:        0 !default;
 
 // Use media queries like this:
 // @include media-query($on-palm) {
