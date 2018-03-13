@@ -34,7 +34,7 @@ a:hover { color: #444; text-decoration: underline; }
 .social-media-list a:hover .username { text-decoration: underline; }
 
 /** Blockquotes */
-blockquote { color: #4c4c4c; border-left: 4px solid #cccccc; padding-left: 2.5px; font-size: 13.5px; letter-spacing: -1px; font-style: italic; }
+blockquote { color: #4c4c4c; border-left: 4px solid #cccccc; padding-left: 2.5px; font-size: 13.5px; font-style: italic; }
 blockquote > :last-child { margin-bottom: 0; }
 
 /** Code formatting */
@@ -66,7 +66,7 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 
 .site-logo { background: transparent; }
 
-.site-title { font-size: 19.5px; font-weight: 300; line-height: 1em; letter-spacing: -1px; margin-bottom: 0; float: left; }
+.site-title { font-size: 19.5px; font-weight: 300; line-height: 1em; margin-bottom: 0; float: left; }
 .site-title, .site-title:visited { color: #0c0c0c; }
 
 .site-nav { float: right; }
@@ -117,6 +117,8 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 .post-link > h4 { font-size: 10.2px; }
 
 /** Posts */
+.post { letter-spacing: 0.015em; }
+
 .post-header { margin-bottom: 70px; }
 .post-header > h1 { font-weight: bold; font-size: 12px; }
 .post-header .post-icon > svg { display: inline-block; vertical-align: baseline; width: 8px; height: 8px; margin-left: 4px; }
@@ -125,6 +127,7 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 
 .post-content { margin-bottom: 70px; }
 .post-content > p { margin-bottom: 20px; }
+.post-content > p > a { text-decoration: underline; }
 .post-content h2 { font-size: 24px; }
 @media screen and (max-width: 420px) { .post-content h2 { font-size: 21px; } }
 .post-content h3 { font-size: 19.5px; }
@@ -137,7 +140,8 @@ pre > code { border: 0; padding-right: 0; padding-left: 0; }
 .post-covers > p > .post-img { display: block; width: auto; height: 300px; background: #fff no-repeat 50%; background-size: contain; cursor: pointer; }
 .post-covers > p > .post-img.enlarge { height: 600px; background-size: cover; }
 
-.post-meta { text-align: right; font-size: 10.8px; line-height: 2em; color: #4c4c4c; }
+.post-meta { text-align: right; font-size: 10.8px; line-height: 1.4em; color: #4c4c4c; }
+.post-meta > p { margin-bottom: 10px; }
 
 /** Syntax highlighting styles */
 .highlight { background: #fff; }

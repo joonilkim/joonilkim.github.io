@@ -31,9 +31,11 @@ layout: default
   </div>
 
   <div class="post-meta">
-    <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+    <p>
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
       {{ page.date | date: "%Y" }}
-    </time>
+      </time>
+    </p>
     <p>{{ page.platform | escape }}</p>
     <p>{{ page.stack | escape }}</p>
   </div>
