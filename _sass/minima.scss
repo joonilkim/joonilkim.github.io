@@ -21,7 +21,7 @@ $grey-color-light: lighten($grey-color, 50%) !default;
 $grey-color-dark:  darken($grey-color, 25%) !default;
 
 // Width of the content area
-$content-width:    420px + $spacing-unit * 2 !default;
+$content-width:    420px + $spacing-unit * 4 !default;
 
 $on-palm:          $content-width !default;
 $on-laptop:        0 !default;
