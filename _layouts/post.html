@@ -4,7 +4,16 @@ layout: default
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+    <h1 class="post-title" itemprop="name headline">
+      {% if page.link %}
+        <a href="{{ page.link }}" target="_blank">
+          {{ page.title | escape }}
+          <span class="icon post-icon">{% include icon-link.svg %}</span>
+        </a>
+      {% else %}
+        {{ page.title | escape }}
+      {% endif %}
+    </h1>
   </header>
 
   <div class="post-desc">
