@@ -9,8 +9,10 @@
 
     <main class="page-content" aria-label="Content">
         <div class="wrapper">
-            {% if page.title %} {{ content }} {% else %}
-            <h2>{{ site.description }}</h2>
+            {% if page.title %}
+              {{ content }}
+            {% else %}
+            <h2>{{ site.title }}</h2>
 
             <ul class="post-list">
                 <li>

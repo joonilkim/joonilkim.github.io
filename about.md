@@ -6,8 +6,10 @@ permalink: /about/
 
 Joonil Kim
 
-[Github](https://github.com/joonilkim)
+Maker / SW Engineer
 
-[Blog](http://jk25d.tumblr.com)
+[Github](https://github.com/joonilkim){:target="_blank"}
+
+[Blog](http://jk25d.tumblr.com){:target="_blank"}
 
 [Email](mailto:jkim25d@gmail.com)
