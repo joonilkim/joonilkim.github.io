@@ -1,46 +1,37 @@
 ---
 layout: default
 ---
+
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
-  <header class="post-header">
     <h1 class="post-title" itemprop="name headline">
-      {% if page.link %}
+        {% if page.link %}
         <a href="{{ page.link }}" target="_blank">
-          {{ page.title | escape }}
-          <span class="icon post-icon">{% include icon-link.svg %}</span>
-        </a>
-      {% else %}
-        {{ page.title | escape }}
-      {% endif %}
+      {{ page.title | escape }}
+      <span class="icon post-icon">{% include icon-link.svg %}</span>
+    </a> {% else %} {{ page.title | escape }} {% endif %}
     </h1>
-  </header>
 
-  <div class="post-desc">
-    {{ page.desc | escape }}
-  </div>
-
-  <div class="post-content" itemprop="articleBody">
-    {{ content }}
-  </div>
-
-  <div class="post-covers">
-    {% for cover in page.covers %}
-    <p><span class="post-img" style="background-image:url({{ cover | relative_url }})" onclick="this.classList.toggle('enlarge')"/></p>
-    {% endfor %}
-  </div>
-
-  <div class="post-meta">
-    <p>
-      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-      {{ page.date | date: "%Y" }}
-      </time>
+    <p class="post-desc">
+        {{ page.desc | escape }}
     </p>
-    <p>{{ page.platform | escape }}</p>
-    <p>{{ page.stack | escape }}</p>
-  </div>
 
-  {% if site.disqus.shortname %}
-    {% include disqus_comments.html %}
-  {% endif %}
+    {{ content }}
+
+    <p>
+      <ul class="post-covers">
+          {% for cover in page.covers %}
+          <li><img class="post-img" src="{{ cover | relative_url }}" onclick="this.classList.toggle('enlarge')"></li>
+          {% endfor %}
+      </ul>
+    </p>
+
+    <p class="post-meta">
+        <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished"> {{ page.date | date: "%Y" }}.</time>
+        <span> {{ page.platform | escape }}</span>
+    </p>
+
+    <p>{{ page.stack | escape }}</p>
+
+    {% if site.disqus.shortname %} {% include disqus_comments.html %} {% endif %}
 </article>

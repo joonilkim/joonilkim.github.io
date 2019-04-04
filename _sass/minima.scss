@@ -1,31 +1,24 @@
 @charset "utf-8";
-
 // Define defaults for each variable.
-
-$base-font-family: sans-serif !default;
-$base-font-size:   18px !default;
-$base-font-weight: 400 !default;
-$small-font-size:  $base-font-size * 0.8 !default;
-$base-line-height: 1.8 !default;
-
-$spacing-unit:     20px !default;
-$line-unit:        16px !default;
-$paragraph-unit:   80px !default;
-
-$text-color:       #5a5a5a !default;
-$background-color: #f9f9f9 !default;
-$brand-color:      #5a5a5a !default;
-
-$grey-color:       #666 !default;
-$grey-color-light: #fdfdfd !default;
-$grey-color-dark:  #666 !default;
-
+$base-font-family: system-ui,
+sans-serif !default;
+$base-font-size: 24px !default;
+$base-font-weight: bold !default;
+$small-font-size: $base-font-size * 0.8 !default;
+$base-line-height: 1.5 !default;
+$spacing-unit: 24px !default;
+$line-unit: 24px !default;
+$paragraph-unit: 24px !default;
+$text-color: #000 !default;
+$background-color: #fff !default;
+$brand-color: #000 !default;
+$grey-color: #000 !default;
+$grey-color-light: #ddd !default;
+$grey-color-dark: #000 !default;
 // Width of the content area
-$content-width:    600px;
-
-$on-palm:          $content-width !default;
-$on-laptop:        0 !default;
-
+$content-width: 100%;
+$on-palm: $content-width !default;
+$on-laptop: 0 !default;
 // Use media queries like this:
 // @include media-query($on-palm) {
 //   .wrapper {
@@ -34,18 +27,17 @@ $on-laptop:        0 !default;
 //   }
 // }
 @mixin media-query($device) {
-  @media screen and (max-width: $device) {
-    @content;
-  }
+    @media screen and (max-width: $device) {
+        @content;
+    }
 }
 
 @mixin relative-font-size($ratio) {
-  font-size: $base-font-size * $ratio;
+    font-size: $base-font-size * $ratio;
 }
 
 // Import partials.
-@import
-  "minima/base",
-  "minima/layout",
-  "minima/syntax-highlighting"
-;
+@import "system-font",
+"minima/base",
+"minima/layout",
+"minima/syntax-highlighting";

@@ -1,13 +1,13 @@
 ---
-layout: page
-title: ABOUT
+layout: post
+title: About
 permalink: /about/
 ---
 
 Joonil Kim
 
-Indie app developer & creative
+[Github](https://github.com/joonilkim)
 
-[jk25d.tumblr.com](http://jk25d.tumblr.com)
+[Blog](http://jk25d.tumblr.com)
 
-[jkim25d@gmail.com](mailto:jkim25d@gmail.com)
+[Email](mailto:jkim25d@gmail.com)
